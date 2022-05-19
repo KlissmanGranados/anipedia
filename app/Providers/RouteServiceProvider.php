@@ -40,7 +40,6 @@ class RouteServiceProvider extends ServiceProvider
         });
 
         resolve(Routing\UrlGenerator::class)->forceScheme('https');
-        parent::boot();
     }
 
     /**
