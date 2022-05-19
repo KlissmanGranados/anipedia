@@ -14,7 +14,7 @@
     },
     "servers": [
         {
-            "url": "http://anime-ws.herokuapp.com/public/",
+            "url": "https://anime-ws.herokuapp.com",
             "description": "Ruta principal"
         }
     ],
