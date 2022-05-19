@@ -1,0 +1,122 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "anipedia API",
+        "description": "Servicio publico para obtener datos de algunos animes",
+        "contact": {
+            "email": "granadosklissman@gmail.com"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "",
+            "description": "Ruta principal"
+        }
+    ],
+    "paths": {
+        "/api/v1/animes/{id}": {
+            "get": {
+                "tags": [
+                    "animes"
+                ],
+                "operationId": "e4e5dc22c92396b3dc5de0f9ea715f26",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Id del anime",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Selecciona un anime y muestra sus detalles."
+                    },
+                    "default": {
+                        "description": "Ha ocurrido un error."
+                    }
+                }
+            }
+        },
+        "/api/v1/animes/query/by": {
+            "get": {
+                "tags": [
+                    "animes"
+                ],
+                "operationId": "1862b43d06cac5951cd28112d9aa661a",
+                "parameters": [
+                    {
+                        "name": "title",
+                        "in": "query",
+                        "description": "Titulo del anime",
+                        "required": false,
+                        "schema": {
+                            "type": "String"
+                        }
+                    },
+                    {
+                        "name": "categories_id",
+                        "in": "query",
+                        "description": "ids de categorias, si son varios separarlos por coma",
+                        "required": false,
+                        "schema": {
+                            "type": "String"
+                        }
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "pagina a mostrar",
+                        "required": false,
+                        "schema": {
+                            "type": "Integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Filtro general de animes."
+                    },
+                    "default": {
+                        "description": "Ha ocurrido un error."
+                    }
+                }
+            }
+        },
+        "/api/v1/categories": {
+            "get": {
+                "tags": [
+                    "categorias"
+                ],
+                "operationId": "d9bf255011b42d56bf306832dc3366c8",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Pagina",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Todas las categorias"
+                    },
+                    "default": {
+                        "description": "Ha ocurrido un error."
+                    }
+                }
+            }
+        }
+    }
+}
