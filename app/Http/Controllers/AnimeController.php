@@ -107,7 +107,7 @@ class AnimeController extends Controller
         }
 
         if($request->has('title')){
-            $anime->where('animes.title', 'like', '%'.$request->title.'%');
+            $anime->where('animes.title', 'like', '%'.strtolower($request->title).'%');
         }
 
         $anime->groupBy('animes.id');
