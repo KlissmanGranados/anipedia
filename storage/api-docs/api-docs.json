@@ -7,14 +7,14 @@
             "email": "granadosklissman@gmail.com"
         },
         "license": {
-            "name": "Apache 2.0",
-            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+            "name": "General Public License",
+            "url": "https://raw.githubusercontent.com/KlissmanGranados/licenses/master/GNU"
         },
         "version": "1.0.0"
     },
     "servers": [
         {
-            "url": "",
+            "url": "http://anime-ws.herokuapp.com/public/",
             "description": "Ruta principal"
         }
     ],
