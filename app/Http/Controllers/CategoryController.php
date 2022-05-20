@@ -14,15 +14,6 @@ class CategoryController extends Controller
      *         response=200,
      *         description="Todas las categorias",
      *     ),
-     *     @OA\Parameter (
-     *         name="page",
-     *         in="query",
-     *         description="Pagina",
-     *         required=false,
-     *         @OA\Schema(
-     *          type="integer"
-     *         )
-     *    ),
      *     @OA\Response(
      *         response="default",
      *         description="Ha ocurrido un error."
@@ -30,7 +21,7 @@ class CategoryController extends Controller
      * )
      */
     public function index(){
-        return Category::paginate();
+        return Category::all();
     }
 
 }

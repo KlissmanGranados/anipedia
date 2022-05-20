@@ -97,17 +97,6 @@
                     "categorias"
                 ],
                 "operationId": "d9bf255011b42d56bf306832dc3366c8",
-                "parameters": [
-                    {
-                        "name": "page",
-                        "in": "query",
-                        "description": "Pagina",
-                        "required": false,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
                 "responses": {
                     "200": {
                         "description": "Todas las categorias"
