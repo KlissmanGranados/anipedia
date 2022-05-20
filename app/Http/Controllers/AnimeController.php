@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Anime;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class AnimeController extends Controller
 {
@@ -32,8 +33,10 @@ class AnimeController extends Controller
      * )
      */
     public function show(Anime $anime){
-        $anime->categories;
-        return $anime;
+        return Cache::rememberForever('anime_show_'.$anime->id, function() use ($anime){
+            $anime->categories;
+            return $anime;
+        });
     }
 
     /**
@@ -78,40 +81,45 @@ class AnimeController extends Controller
      * )
      */
     public function findBy(Request $request){
-        $anime = Anime::query();
 
-        if(!$request->has('categories_id') && !$request->has('title')){
-           return $anime->paginate();
-        }
+        $key = 'animes_findBy_'.$request->title.'_'.$request->categories_id.'_'.($request->page ?? 1);
 
-        $anime->select('animes.*');
+        return Cache::rememberForever($key, function () use ($request) {
+            $anime = Anime::query();
 
-        if($request->has('categories_id')){
+            if(!$request->has('categories_id') && !$request->has('title')){
+                return $anime->paginate();
+            }
 
-            explode(',', $request->categories_id);
+            $anime->select('animes.*');
 
-            $categories = $request->categories_id;
-            $categories = explode(',', $categories);
-            $isJoin = false;
-            foreach ($categories as $category) {
-                if(is_numeric($category)){
-                    if(!$isJoin) {
-                        $anime->join('categories_has_animes',
-                            'categories_has_animes.animes_id',
-                            'animes.id');
-                        $isJoin = true;
+            if($request->has('categories_id')){
+
+                explode(',', $request->categories_id);
+
+                $categories = $request->categories_id;
+                $categories = explode(',', $categories);
+                $isJoin = false;
+                foreach ($categories as $category) {
+                    if(is_numeric($category)){
+                        if(!$isJoin) {
+                            $anime->join('categories_has_animes',
+                                'categories_has_animes.animes_id',
+                                'animes.id');
+                            $isJoin = true;
+                        }
+                        $anime->orWhere('categories_has_animes.categories_id', $category);
                     }
-                    $anime->orWhere('categories_has_animes.categories_id', $category);
                 }
             }
-        }
 
-        if($request->has('title')){
-            $anime->where('animes.title', 'like', '%'.strtolower($request->title).'%');
-        }
+            if($request->has('title')){
+                $anime->where('animes.title', 'like', '%'.strtolower($request->title).'%');
+            }
 
-        $anime->groupBy('animes.id');
+            $anime->groupBy('animes.id');
 
-        return $anime->paginate();
+            return $anime->paginate();
+        });
     }
 }
